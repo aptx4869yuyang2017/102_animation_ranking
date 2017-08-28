@@ -19,6 +19,7 @@
 
 
 ```python
+
         ###############################
             一个简单的 myanimelist 爬虫
             Author: Yu_yang
@@ -26,9 +27,20 @@
             Date: 2017-8-28
         ###############################
 
-爬虫准备就绪, 准备爬取数据...
+准备就绪, 准备爬取数据...
+Top1 Owarimonogatari 2nd Season
+Top2 Fullmetal Alchemist: Brotherhood
+Top3 Kimi no Na wa.
+Top4 Gintama°
+Top5 Steins;Gate
 
-豆瓣爬虫爬取结束...
+...
+
+Top47 Death Note
+Top48 Ansatsu Kyoushitsu (TV) 2nd Season
+Top49 Haikyuu!!
+Top50 Hajime no Ippo: Rising
+爬取结束...
 ```
 
 
