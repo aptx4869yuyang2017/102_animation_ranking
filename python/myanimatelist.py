@@ -36,7 +36,7 @@ class AnimationSpider(object) :
         self.type = []
         self.eps = []
         self.time = []
-        self.num = []
+        self.mum = []
         self.score = []
         self._top_num = 1
         print "准备就绪, 准备爬取数据..."
@@ -57,7 +57,7 @@ class AnimationSpider(object) :
         """
         url = self.cur_url
         try :
-            my_page = urllib2.urlopen(url.format(page = (cur_page - 1) * 50)).read()    #.decode("utf-8")
+            my_page = urllib2.urlopen(url.format(page = (cur_page - 1) * 50)).read().decode("utf-8")
         except urllib2.URLError, e :
             if hasattr(e, "code"):
                 print "The server couldn't fulfill the request."
@@ -93,7 +93,7 @@ class AnimationSpider(object) :
         temp_type = []
         temp_eps = []
         temp_time = []
-        temp_num = []
+        temp_mum = []
         temp_scroe = []
         temp_rank = []
 
@@ -103,7 +103,8 @@ class AnimationSpider(object) :
         for i in range(50):
             temp_mix_t_e.append(movie_info[i][0].strip('\n').strip())
             temp_time.append(movie_info[i][1].strip('\n').strip())
-            temp_num.append(movie_info[i][2].strip('\n').strip())
+            mum = re.findall(r'(.*?) members',movie_info[i][2].strip('\n').strip())
+            temp_mum.append(mum[0]) # 用正则把 members 过滤掉
 
         # 将混合的 ”类型（集数）”  信息，利用正则，分成两个列表
         for i in range(50):
@@ -118,7 +119,7 @@ class AnimationSpider(object) :
         self.type.extend(temp_type)
         self.eps.extend(temp_eps)
         self.time.extend(temp_time)
-        self.num.extend(temp_num)
+        self.mum.extend(temp_mum)
         self.score.extend(temp_scroe)
         self.rank.extend(temp_rank)
 
@@ -155,7 +156,7 @@ def main() :
 
     print "爬取结束，开始构建 scv"
 
-    item_df_dict = {"rank":my_spider.rank, "name":my_spider.name, "type":my_spider.type, "episode":my_spider.eps, "time":my_spider.time, "score":my_spider.score, 'numbers':my_spider.num}
+    item_df_dict = {"rank":my_spider.rank, "name":my_spider.name, "type":my_spider.type, "episode":my_spider.eps, "time":my_spider.time, "score":my_spider.score, 'mumbers':my_spider.mum}
 
     result_dataframe = pd.DataFrame(item_df_dict)
 
