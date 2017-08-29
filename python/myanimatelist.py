@@ -69,11 +69,12 @@ class DouBanSpider(object) :
             my_page: 传入页面的HTML文本用于正则匹配
         """
         temp_data = []
-        movie_items = re.findall(r'<a.*?class="hoverinfo_trigger fl-l fs14 fw-b".*?>(.*?)</a>', my_page, re.S)
-        movie_info = re.findall(r'<div.*?class="information di-ib mt4".*?>(.*?)</div>', my_page, re.S)   #在Python的正则表达式中，有一个参数为re.S。它表示“.”（不包含外侧双引号，下同）的作用扩展到整个字符串，包括“\n”。
+        movie_items = re.findall(r'<a.*?class="hoverinfo_trigger fl-l fs14 fw-b".*?>(.*?)</a>', my_page, re.S)   #在Python的正则表达式中，有一个参数为re.S。它表示“.”（不包含外侧双引号，下同）的作用扩展到整个字符串，包括“\n”。
 
-        ## print movie_items, "***" ## 测试
+        movie_info = re.findall(r'<div.*?class="hoverinfo_trigger fl-l fs14 fw-b".*?>(.*?)<br>(.*?)<br>(.*?)</div>', my_page, re.S)
 
+        print movie_items,movie_info[0]
+        
         for index, item in enumerate(movie_items) :
             if item.find("&nbsp") == -1 :
                 temp_data.append("Top" + str(self._top_num) + " " + item)
@@ -89,8 +90,7 @@ class DouBanSpider(object) :
             my_page = self.get_page(self.page)
             self.find_title(my_page)
             self.page += 1
-
-            # print self.datas #####
+            print self.datas
 
 def main() :
     print """
@@ -103,8 +103,10 @@ def main() :
     """
     my_spider = DouBanSpider()
     my_spider.start_spider()
-    for item in my_spider.datas :
-        print item
+
+
+    # for item in my_spider.datas :
+        # print item
     print "爬取结束..."
 
 if __name__ == '__main__':
