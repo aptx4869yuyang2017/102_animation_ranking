@@ -14,22 +14,15 @@ import string
 import re
 import urllib2
 
-url = "https://myanimelist.net/topanime.php"
+bgm_url = "http://bangumi.tv/anime/browser?sort=rank&page=1"
 
-my_page = urllib2.urlopen(url).read() #.decode("utf-8")
-
-my_page2 = urllib2.urlopen(url).read().decode("utf-8")
-
-movie_items1 = re.findall(r'<a.*?class="hoverinfo_trigger fl-l fs14 fw-b".*?>(.*?)</a>', my_page, re.S)   # 正则解析名字
-
-movie_items2 = re.findall(r'<a.*?class="hoverinfo_trigger fl-l fs14 fw-b".*?>(.*?)</a>', my_page2, re.S)   # 正则解析名字
+my_page = urllib2.urlopen(bgm_url).read().decode("utf-8")
 
 
+movie_items = re.findall(r'<a href="/subject/.*?class="l".*?>(.*?)</a>', my_page, re.S)
 
-
-print movie_items1
-print "***********"
-print movie_items2
+for item in movie_items:
+    print item
 
 
 # temp_type = []

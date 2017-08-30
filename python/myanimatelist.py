@@ -13,6 +13,8 @@ Operate: 具体操作请看README.md介绍
 import string
 import re
 import urllib2
+from collections import OrderedDict
+
 
 import pandas as pd
 
@@ -57,7 +59,7 @@ class AnimationSpider(object) :
         """
         url = self.cur_url
         try :
-            my_page = urllib2.urlopen(url.format(page = (cur_page - 1) * 50)).read().decode("utf-8")
+            my_page = urllib2.urlopen(url.format(page = (cur_page - 1) * 50)).read()  #.decode("utf-8")
         except urllib2.URLError, e :
             if hasattr(e, "code"):
                 print "The server couldn't fulfill the request."
@@ -156,9 +158,12 @@ def main() :
 
     print "爬取结束，开始构建 scv"
 
-    item_df_dict = {"rank":my_spider.rank, "name":my_spider.name, "type":my_spider.type, "episode":my_spider.eps, "time":my_spider.time, "score":my_spider.score, 'mumbers':my_spider.mum}
+    # item_df_dict = {"rank":my_spider.rank, "name":my_spider.name, "type":my_spider.type, "episode":my_spider.eps, "time":my_spider.time, "score":my_spider.score, 'mumbers':my_spider.mum}
 
-    result_dataframe = pd.DataFrame(item_df_dict)
+    item_df_orderdict = OrderedDict([("rank",my_spider.rank), ("name",my_spider.name), ("type",my_spider.type), ("episode",my_spider.eps), ("time",my_spider.time), ("score",my_spider.score), ('mumbers',my_spider.mum)])
+
+    result_dataframe = pd.DataFrame(item_df_orderdict)
+
 
     result_dataframe.to_csv('../data/myanimelist.csv',index=False)
 
