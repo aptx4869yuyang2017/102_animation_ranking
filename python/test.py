@@ -13,26 +13,27 @@ Editor: Atom
 import string
 import re
 import urllib2
+from lxml import etree
 
-bgm_url = "http://bangumi.tv/anime/browser?sort=rank&page=1"
+bgm_url = "http://bangumi.tv/anime/browser?sort=rank&page=2"
 
-my_page = urllib2.urlopen(bgm_url).read().decode("utf-8")
+my_page = urllib2.urlopen(bgm_url).read() #.decode("utf-8")
+
+my_tree = etree.HTML(my_page)
+
+my_li = my_tree.xpath('//li[@class="item odd clearit"]//*|//li[@class="item even clearit"]//*')
+
+print my_li
+# for i in my_li:
+    # i.xpath('span[@class="rank"]/text()')
 
 
-movie_items = re.findall(r'<a href="/subject/.*?class="l".*?>(.*?)</a>', my_page, re.S)
 
-for item in movie_items:
-    print item
+    # print i.xpath('//li//span[@class="rank"]/text()')
 
 
-# temp_type = []
-# temp_time = []
-# temp_num = []
-#
-# for i in range(50):
-    # temp_type.append(movie_info[i][0].strip('\n').strip())
-    # temp_time.append(movie_info[i][1].strip('\n').strip())
-    # temp_num.append(movie_info[i][2].strip('\n').strip())
-#
-# print temp_num
-# print temp_time
+
+
+
+
+# list_movie = [movie_name,movie_rank,movie_name_jp,movie_info,movie_score,movie_mum]
